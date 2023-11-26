@@ -1,3 +1,5 @@
+//Due to lack of time couldn't complete this
+
 const { REST, Routes } = require("discord.js");
 
 const commands = [
@@ -7,14 +9,15 @@ const commands = [
     },
 ];
 
-const rest = new REST({ version: "10" }).setToken(TOKEN);
+const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_BOT_ID);
 
 try {
     console.log('Started refreshing application (/) commands.');
 
-    await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands });
+    await rest.put(Routes.applicationCommands(DISCORD_CLIENT_ID), { body: commands });
 
     console.log('Successfully reloaded application (/) commands.');
 } catch (error) {
     console.error(error);
 }
+

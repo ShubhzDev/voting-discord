@@ -6,19 +6,27 @@ contract Voting {
         bool isVoteCasted;
     }
 
-    uint totalVotes;
-    mapping(address => voter) voters;
+    uint private totalVotes;
 
-    //casting a vote
-    function vote(address walletAddress) public {
+    mapping(address => voter) private voters;
+
+    event VoteCasted(address indexed voter);
+
+    // Casting a vote
+    function vote() public {
+        address walletAddress = msg.sender;
         require(
             !voters[walletAddress].isVoteCasted,
-            "You have already Casted Vote!"
+            "You have already casted your vote!"
         );
         voters[walletAddress].isVoteCasted = true;
+        totalVotes += 1;
+
+        // Emit the VoteCasted event when a vote is cast
+        emit VoteCasted(walletAddress);
     }
 
-    //viewing total votes
+    // Viewing total votes
     function getTotalVotes() public view returns (uint) {
         return totalVotes;
     }
